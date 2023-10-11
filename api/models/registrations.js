@@ -14,11 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       Registrations.belongsTo(models.Classes, { foreignKey: 'class_id' });
     }
   }
-  Registration.init({
+  Registrations.init({
     status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Registrations',
   });
-  return Registration;
+  return Registrations;
 };

@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Classes.hasMany(models.Registrations, { foreignKey: 'class_id' });
 
       Classes.belongsTo(models.People, { foreignKey: 'teacher_id' });
-      Classes.belongsTo(models.Levels), { foreignKey: 'level_id' };
+      Classes.belongsTo(models.Levels, { foreignKey: 'level_id' });
     }
   }
   Classes.init({
