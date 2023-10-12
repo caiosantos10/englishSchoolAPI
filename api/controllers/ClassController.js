@@ -46,6 +46,15 @@ class ClassController {
             res.status(500).json(error.message);
         }
     }
+    static async restoreClass(req, res) {
+        try {
+            const { id } = req.params;
+            await db.Classes.restore({ where: { id: Number(id) } });
+            res.status(200).json({ message: 'Turma restaurada com sucesso' });
+        } catch (error) {
+            res.status(500).json(error.message);
+        }
+    }
 }
 
 module.exports = ClassController;

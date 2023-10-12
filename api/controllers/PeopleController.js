@@ -50,6 +50,15 @@ class PeopleController {
             return res.status(500).json(error.message);
         }
     }
+    static async restorePerson(req, res) {
+        try {
+            const { id } = req.params
+            await database.People.restore({ where: { id: Number(id) } });
+            res.status(200).json({ message: 'Pessoa restaurada com sucesso' });
+        } catch (error) {
+            res.status(500).json(error.message);
+        }
+    }
 
     // Registration methods
 
@@ -87,8 +96,17 @@ class PeopleController {
     static async deleteRegistration(req, res) {
         try {
             const { id } = req.params;
-            const registration = await database.Registrations.destroy({ where: { id: Number(id) } });
+            await database.Registrations.destroy({ where: { id: Number(id) } });
             res.status(200).json({ message: 'Matrícula removida com sucesso' });
+        } catch (error) {
+            res.status(500).json(error.message);
+        }
+    }
+    static async restoreRegistration(req, res) {
+        try {
+            const { id } = req.params
+            await database.Registrations.restore({ where: { id: Number(id) } });
+            res.status(200).json({ message: 'Matrícula restaurada com sucesso' });
         } catch (error) {
             res.status(500).json(error.message);
         }

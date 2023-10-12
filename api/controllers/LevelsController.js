@@ -48,6 +48,16 @@ class LevelsController {
             res.status(500).json(error.message)
         }
     }
+    static async restoreLevel(req, res) {
+        try {
+            const { id } = req.params
+
+            await db.Levels.restore({ where: { id: Number(id) } });
+            res.status(200).json({ message: 'Nível restaurado com sucesso' });
+        } catch (error) {
+            res.status(500).json(error.message)
+        }
+    }
 }
 
 module.exports = LevelsController;
