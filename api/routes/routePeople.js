@@ -10,6 +10,7 @@ router.put('/people/:id', PeopleController.updatePerson);
 router.delete('/people/:id', PeopleController.deletePerson);
 
 // Registration routes
+
 router.get('/people/registrations/:id', PeopleController.getRegistrationById);
 router.post('/people/:id/registrations', PeopleController.createRegistration);
 router.put('/people/registrations/:id', PeopleController.updateRegistration);
