@@ -11,20 +11,38 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       People.hasMany(models.Classes, { foreignKey: 'teacher_id' });
-      People.hasMany(models.Registrations, { foreignKey: 'student_id' });
+      People.hasMany(models.Registrations, { 
+        foreignKey: 'student_id', 
+        scope: { status: 'confirmado' }, 
+        as: 'enrolledClasses' 
+      });
     }
   }
   People.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        validator: (name) => {
+          if (name.length <= 3) throw new Error("Nome deve conter mais que 3 caracteres");
+        }
+      }
+    },
     active: DataTypes.BOOLEAN,
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING, validate: {
+        isEmail: {
+          args: true,
+          msg: "O email é inválido"
+        }
+      }
+    },
     role: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'People',
     paranoid: true,
     defaultScope: { where: { active: 1 } },
-    scopes: { 
+    scopes: {
       all: { where: '' }
     }
   });

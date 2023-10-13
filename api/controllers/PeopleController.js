@@ -69,7 +69,17 @@ class PeopleController {
     }
 
     // Registration methods
-
+    static async getAllRegistrationsByPerson(req, res) {
+        try {
+            const { id } = req.params;
+            const people = await database.People.findOne({ where: { id: Number(id) } });
+            console.log(people)
+            const registrations = await people.getEnrolledClasses();
+            res.status(200).json(registrations);
+        } catch (error) {
+            res.status(500).json(error.message);
+        }
+    }
     static async getRegistrationById(req, res) {
         try {
             const { id } = req.params;
