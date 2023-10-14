@@ -14,6 +14,7 @@ router.post('/people/:id', PeopleController.restorePerson);
 // Registration routes
 
 router.get('/people/:id/registrations', PeopleController.getAllRegistrationsByPerson);
+router.get('/people/registrations/class', PeopleController.getMaximumCapacityRegistrations);
 router.get('/people/registrations/:id', PeopleController.getRegistrationById);
 router.post('/people/:id/registrations', PeopleController.createRegistration);
 router.put('/people/registrations/:id', PeopleController.updateRegistration);

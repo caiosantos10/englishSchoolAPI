@@ -1,4 +1,5 @@
 const database = require('../models');
+const Sequelize = require('sequelize');
 
 class PeopleController {
     static async getActivePeople(req, res) {
@@ -73,9 +74,24 @@ class PeopleController {
         try {
             const { id } = req.params;
             const people = await database.People.findOne({ where: { id: Number(id) } });
-            console.log(people)
             const registrations = await people.getEnrolledClasses();
             res.status(200).json(registrations);
+        } catch (error) {
+            res.status(500).json(error.message);
+        }
+    }
+    static async getMaximumCapacityRegistrations(req, res) {
+        const MAXIMUM_CAPACITY = 2;
+        try {
+            const registrations = await database.Registrations
+                .findAndCountAll({
+                    where: { status: 'confirmado' },
+                    group: ['class_id'],
+                    attributes: ['class_id'],
+                    having: Sequelize.literal(`count(class_id) >= ${MAXIMUM_CAPACITY}`)
+
+                });
+            res.status(200).json(registrations.count);
         } catch (error) {
             res.status(500).json(error.message);
         }
