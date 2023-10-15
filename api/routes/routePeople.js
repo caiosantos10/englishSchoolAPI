@@ -10,6 +10,7 @@ router.post('/people', PeopleController.personRegister);
 router.put('/people/:id', PeopleController.updatePerson);
 router.delete('/people/:id', PeopleController.deletePerson);
 router.post('/people/:id', PeopleController.restorePerson);
+router.put('/people/deactivate/:id', PeopleController.deactivatePeople);
 
 // Registration routes
 

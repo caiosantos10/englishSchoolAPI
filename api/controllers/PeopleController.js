@@ -68,6 +68,20 @@ class PeopleController {
             res.status(500).json(error.message);
         }
     }
+    static async deactivatePeople(req, res) {
+        // O cliente gostaria que, uma vez que o cadastro de um estudante fosse desativado, 
+        // todas as matrículas relativas a este estudante automaticamente passassem a constar como “canceladas”.
+        try {
+            const { id } = req.params;
+            await database.sequelize.transaction(async (transaction) => {
+                await database.People.update({ active: false }, { where: { id: Number(id) } }, { transaction });
+                await database.Registrations.update({ status: 'cancelado' }, { where: { student_id: Number(id) } }, { transaction });
+            });
+            res.status(200).json({ message: 'Pessoa desativada com sucesso' });
+        } catch (error) {
+            res.status(500).json(error.message);
+        }
+    }
 
     // Registration methods
     static async getAllRegistrationsByPerson(req, res) {
