@@ -10,4 +10,4 @@
 /people/registrations/:id
 /people/registrations/:id 
 
-#### This API use Sequelize to map models on Database.
+#### Esta API é um projeto para estudo de Nodejs com Sequelize e MySQL.
